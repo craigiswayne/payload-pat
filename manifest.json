@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "DOS Interceptor",
+  "version": "0.1.13",
+  "browser_action": {
+    "default_icon": "assets/images/icon.png"
+  },
+  "devtools_page": "devtools.html",
+  "content_scripts": [{
+    "matches": [
+      "https://*/*"
+    ],
+    "js": ["assets/scripts/content.js"]
+  }],
+  "background": {
+    "scripts": ["assets/scripts/background.js"]
+  }
+}

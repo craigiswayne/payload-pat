@@ -1,0 +1,161 @@
+<html>
+<head>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./assets/scripts/panel.js"></script>
+</head>
+<body>
+<main class="container container-fluid bg-light mb-5">
+    <header class="row bg-dark text-light">
+        <div class="col">
+            {{circle of statuses here}} 1. Checks Passed, 2. Number of Offers
+        </div>
+        <div class="col col-auto ml-auto p-0">
+            <div class="d-flex">
+                <div class="mr-2">
+                    <div>{{network request}}</div>
+                    <div>{{date time}}</div>
+                    <div>{{size}}</div>
+                </div>
+                <div style="
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    background-color: #F44336;
+">
+                    <div style="
+    font-size: 1.5em;
+">5
+                    </div>
+                    <span>matches</span>
+                </div>
+
+            </div>
+        </div>
+
+    </header>
+    <section class="row">
+        <div class="col" style="display: flex;">
+            <div class="" style="background-color: #555555;width: auto;max-width: 100px;flex-shrink: 1;">
+                <img src="http://wyldsky.com/img/avatar_generic.png" style="width: 100%;height: auto;" />
+            </div>
+            <div>
+                <p>{{username}}</p>
+                <p>{{balance}}</p>
+                <p>{{country}}</p>
+                <p>{{language}}</p>
+            </div>
+        </div>
+        <div class="col" style="display: flex;justify-content: flex-end;">
+            <div>
+                <p>{{username}}</p>
+                <p>{{balance}}</p>
+                <p>{{country}}</p>
+                <p>{{language}}</p>
+            </div>
+            <div class="" style="background-color: #555555;width: auto;max-width: 100px;flex-shrink: 1;">
+                <img src="http://wyldsky.com/img/avatar_generic.png" style="width: 100%;height: auto;">
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="row">
+        <div class="col">
+            <h4 style="width: 100%;text-align: center;">Checks</h4>
+            <div class="accordion w-100" id="parentID">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0 d-flex">
+                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Collapsible Group Item #1
+                            </button>
+                            <div style="margin-left: auto;"><span class="fa fa-check"></span></div>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#parentID">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+    <section class="row">
+        <h4 style="width: 100%;text-align: center;">Offer Summary</h4>
+        <div class="col">
+            <div class="accordion w-100" id="parentID2">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0 d-flex">
+                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="false" aria-controls="collapseOne">
+                                Open Blocks
+                            </button>
+                            <div style="margin-left: auto;"><span class="badge badge-secondary">2</span></div>
+                        </h2>
+                    </div>
+                    <div id="collapseOne2" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0 d-flex">
+                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne22" aria-expanded="false" aria-controls="collapseOne">
+                                FOMO
+                            </button>
+                            <div style="margin-left: auto;"><span class="badge badge-secondary">1</span></div>
+                        </h2>
+                    </div>
+                    <div id="collapseOne22" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <hr/>
+    <section class="row">
+        <div class="col">
+            <h4 class="w-100">Open Blocks</h4>
+            <div class="accordion w-100" id="parentID2">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0 d-flex">
+                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="false" aria-controls="collapseOne">
+                                Collapsible Group Item #1
+                            </button>
+                            <div style="margin-left: auto;"><span class="fa fa-check"></span></div>
+                        </h2>
+                    </div>
+                    <div id="collapseOne3" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
+                        <div class="card-body">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<main id="app" class="container container-fluid bg-light mb-5">
+    <v-accordion title="Offer Summary" :items="payload.offers.summary()"></v-accordion>
+    <v-table :items="payload.offers.summary()"></v-table>
+</main>
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
