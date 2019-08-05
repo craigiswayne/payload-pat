@@ -11,4 +11,5 @@
 * flashing errors
 * Circle Statuses: https://developers.google.com/web/ilt/pwa/img/85ba5f21895251ff.png
 * Separate Components into single file files, https://vuejs.org/v2/guide/single-file-components.html
-
+* Scroll To Top button
+* Animated Scrolling

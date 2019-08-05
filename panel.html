@@ -1,150 +1,253 @@
-<html>
+<html lang="en">
 <head>
+    <title>Bait</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="./node_modules/vue/dist/vue.js"></script>
-    <script src="./assets/js/panel.js"></script>
+    <script src="./assets/scripts/panel.js"></script>
 </head>
 <body>
-  Loading.....
-<main class="container container-fluid bg-light mb-5 d-none">
-    <header class="row bg-dark text-light">
-        <div class="col">
-            {{circle of statuses here}} 1. Checks Passed, 2. Number of Offers
-        </div>
-        <div class="col col-auto ml-auto p-0">
-            <div class="d-flex">
-                <div class="mr-2">
-                    <div>{{network request}}</div>
-                    <div>{{date time}}</div>
-                    <div>{{size}}</div>
-                </div>
-                <div style="text-align: center;vertical-align: middle;display: flex;flex-direction: column;justify-content: center;padding: 10px;background-color: #F44336;">
-                  <div style="font-size: 1.5em;">5</div>
-                    <span>matches</span>
-                </div>
-            </div>
-        </div>
 
-    </header>
-    <section class="row">
-        <div class="col" style="display: flex;">
-            <div class="" style="background-color: #555555;width: auto;max-width: 100px;flex-shrink: 1;">
-                <img src="http://wyldsky.com/img/avatar_generic.png" style="width: 100%;height: auto;" />
-            </div>
-            <div>
-                <p>{{username}}</p>
-                <p>{{balance}}</p>
-                <p>{{country}}</p>
-                <p>{{language}}</p>
-            </div>
-        </div>
-        <div class="col" style="display: flex;justify-content: flex-end;">
-            <div>
-                <p>{{username}}</p>
-                <p>{{balance}}</p>
-                <p>{{country}}</p>
-                <p>{{language}}</p>
-            </div>
-            <div class="" style="background-color: #555555;width: auto;max-width: 100px;flex-shrink: 1;">
-                <img src="http://wyldsky.com/img/avatar_generic.png" style="width: 100%;height: auto;">
-            </div>
-        </div>
-    </section>
-    <hr>
-    <section class="row">
-        <div class="col">
-            <h4 style="width: 100%;text-align: center;">Checks</h4>
-            <div class="accordion w-100" id="parentID">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0 d-flex">
-                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Collapsible Group Item #1
-                            </button>
-                            <div style="margin-left: auto;"><span class="fa fa-check"></span></div>
-                        </h2>
-                    </div>
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#parentID">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  	<div class="navbar-brand js-scroll-trigger"><h2>HLS</h2></div>
+  	<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  		<span class="navbar-toggler-icon"></span>
+  	</button>
+  	<div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+  		<ul class="navbar-nav">
+				<li class="nav-item">
+					<h2><a class="nav-link" href="#">Print</a></h2>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#"><h2><span class="badge badge-secondary" title="Total Payloads">3</span></h2></a>
+				</li>
+      </ul>
+  	</div>
+  </nav>
 
-    <hr>
-    <section class="row">
-        <h4 style="width: 100%;text-align: center;">Offer Summary</h4>
-        <div class="col">
-            <div class="accordion w-100" id="parentID2">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0 d-flex">
-                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="false" aria-controls="collapseOne">
-                                Open Blocks
-                            </button>
-                            <div style="margin-left: auto;"><span class="badge badge-secondary">2</span></div>
-                        </h2>
-                    </div>
-                    <div id="collapseOne2" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="mb-0 d-flex">
-                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne22" aria-expanded="false" aria-controls="collapseOne">
-                                FOMO
-                            </button>
-                            <div style="margin-left: auto;"><span class="badge badge-secondary">1</span></div>
-                        </h2>
-                    </div>
-                    <div id="collapseOne22" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
+  <main class="p-3" id="app">
+    <div class="container-fluid">
 
-            </div>
+      <section>
+        <h3>Offer Summary</h3>
+        <table class="table">
+          <tbody>
+            <tr v-for="(offer,index) in offerSummary" :key='index'>
+              <template v-if="index+1 === offerSummary.length">
+                <th>{{offer.type}}</th><td>{{offer.count}}</td>
+              </template>
+              <template v-else>
+                <th>
+                  <a :href="slugify('#'+offer.type+'-offers')">{{offer.type}}</a>
+                </th>
+                <td>
+                  <a :href="slugify('#'+offer.type+'-offers')">{{offer.count}}</a>
+                </td>
+              </template>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-end">
+          <span class="btn"><a href="#">View in MRI</a></span>
+          <span class="btn"><a href="#">View in Kibana</a></span>
         </div>
-    </section>
-    <hr/>
-    <section class="row">
-        <div class="col">
-            <h4 class="w-100">Open Blocks</h4>
-            <div class="accordion w-100" id="parentID2">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h2 class="mb-0 d-flex">
-                            <button class="btn btn-link collapsed col text-left" type="button" data-toggle="collapse" data-target="#collapseOne3" aria-expanded="false" aria-controls="collapseOne">
-                                Collapsible Group Item #1
-                            </button>
-                            <div style="margin-left: auto;"><span class="fa fa-check"></span></div>
-                        </h2>
-                    </div>
-                    <div id="collapseOne3" class="collapse" aria-labelledby="headingOne" data-parent="#parentID2">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+      </section>
 
-<main id="app" class="container container-fluid bg-light mb-5 d-none">
-    <v-accordion title="Offer Summary" :items="payload.offers.summary()"></v-accordion>
-    <v-table :items="payload.offers.summary()"></v-table>
-</main>
-<script src="./node_modules/jquery/dist/jquery.min.js"></script>
-<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+      <section>
+        <h3>User Info</h3>
+        <table class="table">
+          <tbody>
+            <tr><th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">492</span>-<span class="badge badge-secondary" title="User ID">XXXXXXXX</span></td></tr>
+            <tr><th>Username</th><td>2</td></tr>
+            <tr><th>Session ID</th><td>5</td></tr>
+            <tr><th>Balance</th><td>8</td></tr>
+            <tr><th>Language</th><td>Afrikaans</td></tr>
+            <tr><th>Country</th><td><span title="South Africa">South Africa</span></td></tr>
+          </tbody>
+        </table>
+        <div class="row justify-content-end">
+          <span class="btn"><a href="#">View in UserInfo</a></span>
+        </div>
+      </section>
+
+      <section id="casino-section">
+        <h3>Casino Info</h3>
+        <table class="table">
+          <tbody>
+            <tr><th>Name</th><td>RoyalVegas</td></tr>
+            <tr><th>Company</th><td>FLG</td></tr>
+            <tr><th>Area</th><td>casino</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="dailybonus-offers">
+        <h3>Daily Bonus Offers <span class="badge badge-light">1</span></h3>
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Content Type</th>
+              <th>Content ID</th>
+              <th>Language ISO</th>
+              <th>Opted In</th>
+              <th>Carousel Text</th>
+              <th>Atom URL</th>
+              <th>MRI URL</th>
+              <th>Refinery URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Daily Bonus 1</td>
+              <td>Calendar</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="calendar-offers">
+        <h3>Calendar Offers <span class="badge badge-light">2</span></h3>
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Content Type</th>
+              <th>Content ID</th>
+              <th>Language ISO</th>
+              <th>Opted In</th>
+              <th>Carousel Text</th>
+              <th>Atom URL</th>
+              <th>MRI URL</th>
+              <th>Refinery URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Calendar FLG Unlimited</td>
+              <td>Calendar</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+            <tr>
+              <td>Calendar FLG Unlimited</td>
+              <td>Calendar</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="openblock-offers">
+        <h3>OpenBlock Offers <span class="badge badge-light">5</span></h3>
+        <table class="tabl table-responsive">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Content Type</th>
+              <th>Content ID</th>
+              <th>Language ISO</th>
+              <th>Opted In</th>
+              <th>Carousel Text</th>
+              <th>Atom URL</th>
+              <th>MRI URL</th>
+              <th>Refinery URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FLG OpenBlock 1</td>
+              <td>HeadlineGamePlay</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+            <tr>
+              <td>FLG OpenBlock 2</td>
+              <td>HeadlineGamePlay</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+            <tr>
+              <td>FLG OpenBlock 3</td>
+              <td>HeadlineGamePlay</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+            <tr>
+              <td>FLG OpenBlock 4</td>
+              <td>HeadlineGamePlay</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+            <tr>
+              <td>FLG OpenBlock 5</td>
+              <td>HeadlineGamePlay</td>
+              <td>XXX-XXX-XXX-XXX</td>
+              <td>en</td>
+              <td>false</td>
+              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+              <td><a href="#">link</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h3>Built-In Checks</h3>
+        <table class="table table-responsive">
+          <tbody>
+            <tr><th>All Offers in same language</th><td><span class="fa fa-check text-muted"></span></td></tr>
+            <tr><th>All Offers have carousel text</th><td><span class="fa fa-times text-muted"></span></td></tr>
+            <tr><th>Content Exists in Atom</th><td><span class="fa fa-question text-muted"></span></td></tr>
+            <tr><th>No Duplicate Offers</th><td><span class="fa fa-check text-muted"></span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+  </main>
+
 </body>
 </html>

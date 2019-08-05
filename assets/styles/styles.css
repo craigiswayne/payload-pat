@@ -1,0 +1,18 @@
+.bg-primary {
+    background-color: #d6df26 !important;
+    background-color: #1bbed1 !important;
+    background-color: #5bbf94 !important;
+}
+
+
+main section{
+    margin-bottom:3em;
+}
+
+main section:after {
+    content: "";
+    display: block;
+    width: 80%;
+    box-shadow: 0 1px 2px 1px #ccc;
+    margin: 1rem auto 0 auto;
+}

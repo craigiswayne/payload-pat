@@ -1,24 +1,74 @@
-let Offer = function(data){
-  this.type = '?';
-  this.id = getUniqueID();
-  this.name = '?';
+const Offer = function(data){
+  this.type = data.type || '?';
+  this.name = data.name || '?';
+
+  this.contentID = getUniqueID();
+  this.contentType = '?';
+  this.languageISO = 'en';
+
+  this.optedIN = true;
+  this.carouselText = 'Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.';
+
+  this.atomURL = '#';
+  this.mriURL = '#';
+  this.refineryURL = '#';
 
   Object.keys(data).forEach(k=>{
     this[k] = data[k];
   })
 };
 
-let AccordionItem = function(data){
-  this.id = getUniqueID();
-  this.title = '?';
-  this.description = '';
+// let AccordionItem = function(data){
+//   this.id = getUniqueID();
+//   this.title = '?';
+//   this.description = '';
+//
+//   Object.keys(data).forEach(k=>{
+//     this[k] = data[k];
+//   })
+// };
 
-  Object.keys(data).forEach(k=>{
-    this[k] = data[k];
-  })
+let Bait = {
+  slugify: function(val){
+    return val.toLowerCase().replace(' ','-');
+  },
+
+  offerGroups: [],
+
+  offers: [
+    new Offer({type:'Calendar'}),
+    new Offer({type:'DailyBonus'}),
+    new Offer({type:'Calendar'}),
+    new Offer({type:'OpenBlock'}),
+    new Offer({type:'OpenBlock'}),
+    new Offer({type:'OpenBlock'}),
+    new Offer({type:'OpenBlock'}),
+    new Offer({type:'OpenBlock'})
+  ],
+
+  offerSummary: function(){
+    const summary = [];
+
+    Bait.offers.forEach( offer => {
+      let summaryItem = summary.find( _ =>  _.type == offer.type );
+      let group;
+      if( !summaryItem ){
+        group  = {type: offer.type, offers: []};
+        Bait.offerGroups.push(group);
+
+        summaryItem = {type: offer.type, count: 0};
+        summary.push(summaryItem);
+      }
+
+      group = Bait.offerGroups.find( g => g.type === offer.type );
+      group.offers.push( offer );
+      summaryItem.count++;
+    });
+
+    summary.push( {type: 'Total', count: Bait.offers.length } );
+    return summary.sort( (a,b) => a.count < b.count ? -1 : 1);
+  }
 };
-
-let Bait = {};
 // import UsrMsg from "../../components/UsrMsg";
 
 Bait.payload = {};
@@ -144,13 +194,14 @@ Vue.component('v-table',{
     }
   }
 });
+
 let vOptions = {
   el: '#app',
   data: function(){
-
-    let data = Bait;
-    // data.offerSummary = Bait.payload.offers.summary.map(_=>new AccordionItem(_));
-    return data;
+    return {
+      offerSummary: Bait.offerSummary(),
+      slugify: Bait.slugify
+    }
   }
 };
 

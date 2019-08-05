@@ -52,11 +52,11 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
       return;
     }
 
-    const regex = /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm;
-
-    if( !request.request.url.match(regex) ){
-      return;
-    }
+    // const regex = /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm;
+    //
+    // if( !request.request.url.match(regex) ){
+    //   return;
+    // }
 
     let accordion = PanelWindow.document.createElement('details');
     let summary = accordion.appendChild(PanelWindow.document.createElement('summary'));
