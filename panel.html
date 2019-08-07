@@ -18,7 +18,7 @@
   	<div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
   		<ul class="navbar-nav">
 				<li class="nav-item">
-					<h2><a class="nav-link" href="#">Print</a></h2>
+					<h2><a class="nav-link" href="#" onclick="window.print()">Print</a></h2>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#"><h2><span class="badge badge-secondary" title="Total Payloads">3</span></h2></a>
@@ -27,7 +27,7 @@
   	</div>
   </nav>
 
-  <main class="p-3" id="app">
+  <main id="app">
     <div class="container-fluid">
 
       <section>
@@ -35,10 +35,7 @@
         <table class="table">
           <tbody>
             <tr v-for="(offer,index) in offerSummary" :key='index'>
-              <template v-if="index+1 === offerSummary.length">
-                <th>{{offer.type}}</th><td>{{offer.count}}</td>
-              </template>
-              <template v-else>
+              <template v-if="offer.type !== 'total'">
                 <th>
                   <a :href="slugify('#'+offer.type+'-offers')">{{offer.type}}</a>
                 </th>
@@ -48,6 +45,9 @@
               </template>
             </tr>
           </tbody>
+          <tfoot>
+              <th>Total</th><td>{{offerSummary[offerSummary.length-1].count}}</td>
+          </tfoot>
         </table>
         <div class="row justify-content-end">
           <span class="btn"><a href="#">View in MRI</a></span>
@@ -59,12 +59,24 @@
         <h3>User Info</h3>
         <table class="table">
           <tbody>
-            <tr><th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">492</span>-<span class="badge badge-secondary" title="User ID">XXXXXXXX</span></td></tr>
-            <tr><th>Username</th><td>2</td></tr>
-            <tr><th>Session ID</th><td>5</td></tr>
-            <tr><th>Balance</th><td>8</td></tr>
-            <tr><th>Language</th><td>Afrikaans</td></tr>
-            <tr><th>Country</th><td><span title="South Africa">South Africa</span></td></tr>
+            <tr>
+              <th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">{{userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{userInfo.userID}}</span></td>
+            </tr>
+            <tr>
+              <th>Username</th><td>{{userInfo.username}}</td>
+            </tr>
+            <tr>
+              <th>Session ID</th><td>{{userInfo.sessionID}}</td>
+            </tr>
+            <tr>
+              <th>Balance</th><td>{{userInfo.balance}}</td>
+            </tr>
+            <tr>
+              <th>Language</th><td title="todo: supply full language here">{{userInfo.languageISO}}</td>
+            </tr>
+            <tr>
+              <th>Country</th><td><span title="todo: supply full country here">{{userInfo.countryISO}}</span></td>
+            </tr>
           </tbody>
         </table>
         <div class="row justify-content-end">
@@ -73,15 +85,37 @@
       </section>
 
       <section id="casino-section">
-        <h3>Casino Info</h3>
+        <h3>Product Info</h3>
         <table class="table">
           <tbody>
-            <tr><th>Name</th><td>RoyalVegas</td></tr>
-            <tr><th>Company</th><td>FLG</td></tr>
-            <tr><th>Area</th><td>casino</td></tr>
+            <tr><th>Name</th><td>{{productInfo.name}} (TODO: show the product logo or branding here)</td></tr>
+            <tr><th>Company</th><td>{{productInfo.company}} (TODO: show the company logo or branding here)</td></tr>
+            <tr><th>Area</th><td>{{productInfo.area}}</td></tr>
           </tbody>
         </table>
       </section>
+
+      <template v-for="summary in offerSummary">
+        <section v-if="summary.type !== 'total'">
+          <h3><span class="mr-2">{{summary.type}} Offers</span><span class="badge badge-light">{{summary.count}}</span></h3>
+          <table>
+            <thead>
+              <tr>
+                <th v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
+                  {{prop}}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
+                  <span v-html="val|humanize"></span>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </template>
 
       <section id="dailybonus-offers">
         <h3>Daily Bonus Offers <span class="badge badge-light">1</span></h3>
@@ -236,15 +270,21 @@
 
       <section>
         <h3>Built-In Checks</h3>
-        <table class="table table-responsive">
+        <table class="table table">
           <tbody>
-            <tr><th>All Offers in same language</th><td><span class="fa fa-check text-muted"></span></td></tr>
-            <tr><th>All Offers have carousel text</th><td><span class="fa fa-times text-muted"></span></td></tr>
-            <tr><th>Content Exists in Atom</th><td><span class="fa fa-question text-muted"></span></td></tr>
-            <tr><th>No Duplicate Offers</th><td><span class="fa fa-check text-muted"></span></td></tr>
+            <template v-for="(value,property) in builtInChecks">
+              <tr v-bind:class="{'text-danger': value === false }">
+                <th>{{property}}</th>
+                <td><span class="fa fa-check" v-bind:class="{'fa-check': value === true, 'fa-times': value === false }"></span></td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </section>
+
+      <footer class="text-center my-3">
+        <button class="btn btn-lg btn-primary" v-on:click="copyPayload">Copy Payload</button>
+      </footer>
 
     </div>
   </main>
