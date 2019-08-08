@@ -3,10 +3,10 @@
     <title>Bait</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="dist/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="./node_modules/vue/dist/vue.js"></script>
-    <script src="./assets/scripts/panel.js"></script>
+    <script src="./dist/panel.js"></script>
 </head>
 <body>
 
@@ -30,7 +30,7 @@
   <main id="app">
     <div class="container-fluid">
 
-      <section>
+      <section id="offer-summary-section">
         <h3>Offer Summary</h3>
         <table class="table">
           <tbody>
@@ -55,7 +55,7 @@
         </div>
       </section>
 
-      <section>
+      <section id="user-info-section">
         <h3>User Info</h3>
         <table class="table">
           <tbody>
@@ -84,7 +84,7 @@
         </div>
       </section>
 
-      <section id="casino-section">
+      <section id="product-section">
         <h3>Product Info</h3>
         <table class="table">
           <tbody>
@@ -96,177 +96,26 @@
       </section>
 
       <template v-for="summary in offerSummary">
-        <section v-if="summary.type !== 'total'">
+        <section v-if="summary.type !== 'total'" :id="slugify(summary.type)+'-offers'" >
           <h3><span class="mr-2">{{summary.type}} Offers</span><span class="badge badge-light">{{summary.count}}</span></h3>
           <table>
             <thead>
               <tr>
-                <th v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
+                <th v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
                   {{prop}}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
-                  <span v-html="val|humanize"></span>
+              <tr v-for="(offer, offerIndex) in offers.filter(o=>o.type === summary.type)">
+                <td v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in offer">
+                  <span v-html="humanize(val)"></span>
                 </th>
               </tr>
             </tbody>
           </table>
         </section>
       </template>
-
-      <section id="dailybonus-offers">
-        <h3>Daily Bonus Offers <span class="badge badge-light">1</span></h3>
-        <table class="table table-responsive">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Content Type</th>
-              <th>Content ID</th>
-              <th>Language ISO</th>
-              <th>Opted In</th>
-              <th>Carousel Text</th>
-              <th>Atom URL</th>
-              <th>MRI URL</th>
-              <th>Refinery URL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Daily Bonus 1</td>
-              <td>Calendar</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="calendar-offers">
-        <h3>Calendar Offers <span class="badge badge-light">2</span></h3>
-        <table class="table table-responsive">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Content Type</th>
-              <th>Content ID</th>
-              <th>Language ISO</th>
-              <th>Opted In</th>
-              <th>Carousel Text</th>
-              <th>Atom URL</th>
-              <th>MRI URL</th>
-              <th>Refinery URL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Calendar FLG Unlimited</td>
-              <td>Calendar</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-            <tr>
-              <td>Calendar FLG Unlimited</td>
-              <td>Calendar</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="openblock-offers">
-        <h3>OpenBlock Offers <span class="badge badge-light">5</span></h3>
-        <table class="tabl table-responsive">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Content Type</th>
-              <th>Content ID</th>
-              <th>Language ISO</th>
-              <th>Opted In</th>
-              <th>Carousel Text</th>
-              <th>Atom URL</th>
-              <th>MRI URL</th>
-              <th>Refinery URL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>FLG OpenBlock 1</td>
-              <td>HeadlineGamePlay</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-            <tr>
-              <td>FLG OpenBlock 2</td>
-              <td>HeadlineGamePlay</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-            <tr>
-              <td>FLG OpenBlock 3</td>
-              <td>HeadlineGamePlay</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-            <tr>
-              <td>FLG OpenBlock 4</td>
-              <td>HeadlineGamePlay</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-            <tr>
-              <td>FLG OpenBlock 5</td>
-              <td>HeadlineGamePlay</td>
-              <td>XXX-XXX-XXX-XXX</td>
-              <td>en</td>
-              <td>false</td>
-              <td>Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.Lots of text that should be wrapped.</td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-              <td><a href="#">link</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
 
       <section>
         <h3>Built-In Checks</h3>

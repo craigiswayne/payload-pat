@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "strict": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "outDir": "./dist"
+  },
+  "include": [
+      "./assets/scripts/*.ts"
+  ],
+  "exclude": [
+      "node_modules"
+  ]
+
+}
