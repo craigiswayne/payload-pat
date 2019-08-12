@@ -6,10 +6,7 @@
   "scripts": {
     "sass": "node-sass ./assets/styles -o dist",
     "watch-styles": "npm run sass && node-sass --watch ./assets/styles -o dist",
-
     "ts": "tsc -p ./",
-    "ts-panel": "tsc --out ./dist/panel.js ./assets/scripts/panel.ts ./assets/scripts/helper.service.ts --module amd",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -26,5 +23,8 @@
     "node-sass": "^4.12.0",
     "typescript": "^3.5.3",
     "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "concat": "^1.0.3"
   }
 }

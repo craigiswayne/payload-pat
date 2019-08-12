@@ -7,7 +7,7 @@
     "outDir": "./dist"
   },
   "include": [
-      "./assets/scripts/*.ts"
+      "./assets/scripts/panel.ts"
   ],
   "exclude": [
       "node_modules"
