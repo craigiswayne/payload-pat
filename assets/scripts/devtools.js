@@ -1,10 +1,10 @@
 // //test
 //
-// let panel = chrome.devtools.panels.create("Bait", "assets/images/logo.png", "panel.html", function(panel) {
+// let panel = chrome.devtools.panels.create('Bait', 'assets/images/logo.png', 'panel.html', function(panel) {
 //
 // });
 //
-// console.log("Panel", panel);
+// console.log('Panel', panel);
 //
 // chrome.devtools.network.onRequestFinished.addListener(function(result) {
 //
@@ -12,26 +12,26 @@
 //     if( result.request.url.match(regEx) ){
 //       debugger;
 //     }
-//     chrome.devtools.inspectedWindow.eval('console.log("Request Finished: " + unescape("' +escape(result.request.url) + '"))');
+//     chrome.devtools.inspectedWindow.eval('console.log('Request Finished: ' + unescape('' +escape(result.request.url) + ''))');
 // });
 //
 // // chrome.webRequest.onBeforeRequest.addListener(function(details) {
 // //
-// //     console.log("Bait", details);
+// //     console.log('Bait', details);
 // //     return {l
-// //       cancel: details.url.indexOf("://www.evil.com/") != -1
+// //       cancel: details.url.indexOf('://www.evil.com/') != -1
 // //     };
 // // },
-// // {urls: ["<all_urls>"]},
-// // ["blocking"]);
+// // {urls: ['<all_urls>']},
+// // ['blocking']);
 
 chrome.devtools.network.onRequestFinished.addListener(function(request) {
         logger(request.request.url);
 });
 
 function logger(data){
-  chrome.devtools.inspectedWindow.eval(
-      'console.log("Logger: ", unescape("' +escape(data) + '"))');
+  // chrome.devtools.inspectedWindow.eval(
+  //     'console.log('Logger: ', unescape('' +escape(data) + ''))');
 }
 
 
@@ -42,7 +42,7 @@ function requestToDetails(){
   let summary = accordion.appendChild(PanelWindow.document.createElement('summary'));
   summary.innerHTML = request.request.url;
   let preText = accordion.appendChild(PanelWindow.document.createElement('pre'));
-  preText.setAttribute("style", "max-height:200px");
+  preText.setAttribute('style', 'max-height:200px');
   preText.innerHTML = JSON.stringify(request, undefined, 2);
   return accordion;
 }
@@ -52,37 +52,53 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
       return;
     }
 
-    // const regex = /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm;
+    const regex = /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm;
+    if( !request.request.url.match(regex) ){
+      return;
+    }
+
+    //Only Cater for Get methods
+    if( request.request.method !== 'GET'){
+      return;
+    }
+
+    let payload = new Payload(request);
+    payload.getContent = request.getContent;
+
+    PanelWindow.payloads.push(payload);
+    // debugger;
+    // request.getContent(function(body){
+    //   debugger;
+    //     PanelWindow.payloads.push(new Payload(body));
+    // });
+
+    // PanelWindow.payloads.push(request);
     //
-    // if( !request.request.url.match(regex) ){
-    //   return;
-    // }
-
-    let accordion = PanelWindow.document.createElement('details');
-    let summary = accordion.appendChild(PanelWindow.document.createElement('summary'));
-    summary.innerHTML = request.request.url;
-    let preText = accordion.appendChild(PanelWindow.document.createElement('pre'));
-    preText.setAttribute("style", "max-height:200px");
-    preText.innerHTML = JSON.stringify(request, undefined, 2);
-
-
-
-    PanelWindow.document.body.appendChild(accordion);
-    PanelWindow.document.body.appendChild(document.createElement("br"));
-    PanelWindow.document.body.appendChild(document.createElement("hr"));
-
-    // request.getContent(function(c, e){
-    //     let preText2 = PanelWindow.document.body.appendChild(document.createElement('pre'));
-    //     preText2.innerHTML = c;
-    // })
+    // let accordion = PanelWindow.document.createElement('details');
+    // let summary = accordion.appendChild(PanelWindow.document.createElement('summary'));
+    // summary.innerHTML = request.request.url;
+    // let preText = accordion.appendChild(PanelWindow.document.createElement('pre'));
+    // preText.setAttribute('style', 'max-height:200px');
+    // preText.innerHTML = JSON.stringify(request, undefined, 2);
+    //
+    //
+    //
+    // PanelWindow.document.body.appendChild(accordion);
+    // PanelWindow.document.body.appendChild(document.createElement('br'));
+    // PanelWindow.document.body.appendChild(document.createElement('hr'));
+    //
+    // // request.getContent(function(c, e){
+    // //     let preText2 = PanelWindow.document.body.appendChild(document.createElement('pre'));
+    // //     preText2.innerHTML = c;
+    // // })
 
 
 });
 
-
-chrome.devtools.panels.create("Pascal", "/assets/images/logo.png", "panel.html",
+chrome.devtools.panels.create('HLS', '/assets/images/logo.png', 'panel.html',
   function(extensionPanel) {
     extensionPanel.onShown.addListener(function(panelWindow) {
         PanelWindow = panelWindow;
+        PanelWindow.payloads = [];
     });
 });
