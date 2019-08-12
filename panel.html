@@ -1,74 +1,68 @@
 <html lang="en">
 <head>
     <title>Bait</title>
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="dist/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css ">
+    <link rel="stylesheet" href="./dist/panel.css">
     <script src="./node_modules/vue/dist/vue.js"></script>
-    <script src="./dist/panel.js"></script>
 </head>
 <body>
-
   <main id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     	<div class="navbar-brand"><h2>HLS</h2></div>
   				<h2><a class="nav-link" href="#" onclick="window.print()">Print</a></h2>
-          <select>
-            <option>Payloads found</option>
-            <option v-for="(payload, index) in Net.results">{{index+1}} - {{payload.timestamp.getHours()}}:{{payload.timestamp.getMinutes()}}:{{payload.timestamp.getSeconds()}}</option>
+          <select title="Payloads found" @change="viewPayload($event)">
+            <option v-for="(payload, index) in payloads">{{index+1}} - {{payload.timestamp.getHours()}}:{{payload.timestamp.getMinutes()}}:{{payload.timestamp.getSeconds()}}</option>
           </select>
     	</div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" v-if="Net.selected">
 
-      <!-- <section id="offer-summary-section">
+      <section id="offer-summary-section">
         <h3>Offer Summary</h3>
         <table class="table">
           <tbody>
-            <tr v-for="(offer,index) in offerSummary" :key='index'>
-              <template v-if="offer.type !== 'total'">
-                <th>
-                  <a :href="slugify('#'+offer.type+'-offers')">{{offer.type}}</a>
-                </th>
-                <td>
-                  <a :href="slugify('#'+offer.type+'-offers')">{{offer.count}}</a>
-                </td>
-              </template>
+            <tr v-for="(offer,index) in Net.selected.offerSummary" :key='index'>
+              <th>
+                <a :href="slugify('#'+offer.type+'-offers')">{{offer.type}}</a>
+              </th>
+              <td>
+                <a :href="slugify('#'+offer.type+'-offers')">{{offer.count}}</a>
+              </td>
             </tr>
           </tbody>
           <tfoot>
-              <th>Total</th><td>{{offerSummary[offerSummary.length-1].count}}</td>
+              <th>Total</th><td>{{Net.selected.offers.length}}</td>
           </tfoot>
         </table>
         <div class="row justify-content-end">
           <span class="btn"><a href="#">View in MRI</a></span>
           <span class="btn"><a href="#">View in Kibana</a></span>
         </div>
-      </section> -->
+      </section>
 
-      <!-- <section id="user-info-section">
+      <section id="user-info-section">
         <h3>User Info</h3>
         <table class="table">
           <tbody>
             <tr>
-              <th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">{{userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{userInfo.userID}}</span></td>
+              <th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">{{Net.selected.userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{Net.selected.userInfo.userID}}</span></td>
             </tr>
             <tr>
-              <th>Username</th><td>{{userInfo.username}}</td>
+              <th>Username</th><td>{{Net.selected.userInfo.username}}</td>
             </tr>
             <tr>
-              <th>Session ID</th><td>{{userInfo.sessionID}}</td>
+              <th>Session ID</th><td>{{Net.selected.userInfo.sessionID}}</td>
             </tr>
             <tr>
-              <th>Balance</th><td>{{userInfo.balance}}</td>
+              <th>Balance</th><td>{{Net.selected.userInfo.balance}}</td>
             </tr>
             <tr>
-              <th>Language</th><td title="todo: supply full language here">{{userInfo.languageISO}}</td>
+              <th>Language</th><td title="todo: supply full language here">{{Net.selected.userInfo.languageISO}}</td>
             </tr>
             <tr>
-              <th>Country</th><td><span title="todo: supply full country here">{{userInfo.countryISO}}</span></td>
+              <th>Country</th><td><span title="todo: supply full country here">{{Net.selected.userInfo.countryISO}}</span></td>
             </tr>
           </tbody>
         </table>
@@ -81,26 +75,26 @@
         <h3>Product Info</h3>
         <table class="table">
           <tbody>
-            <tr><th>Name</th><td>{{productInfo.name}} (TODO: show the product logo or branding here)</td></tr>
-            <tr><th>Company</th><td>{{productInfo.company}} (TODO: show the company logo or branding here)</td></tr>
-            <tr><th>Area</th><td>{{productInfo.area}}</td></tr>
+            <tr><th>Name</th><td>{{Net.selected.productInfo.name}} (TODO: show the product logo or branding here)</td></tr>
+            <tr><th>Company</th><td>{{Net.selected.productInfo.company}} (TODO: show the company logo or branding here)</td></tr>
+            <tr><th>Area</th><td>{{Net.selected.productInfo.area}}</td></tr>
           </tbody>
         </table>
-      </section> -->
+      </section>
 
-      <!-- <template v-for="summary in offerSummary">
+      <template v-for="summary in Net.selected.offerSummary">
         <section v-if="summary.type !== 'total'" :id="slugify(summary.type)+'-offers'" >
           <h3><span class="mr-2">{{summary.type}} Offers</span><span class="badge badge-light">{{summary.count}}</span></h3>
           <table>
             <thead>
               <tr>
-                <th v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in offers.find(o=>o.type === summary.type)">
+                <th v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in Net.selected.offers.filter(o=>o.type === summary.type)[0]">
                   {{prop}}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(offer, offerIndex) in offers.filter(o=>o.type === summary.type)">
+              <tr v-for="(offer, offerIndex) in Net.selected.offers.filter(o=>o.type === summary.type)">
                 <td v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in offer">
                   <span v-html="humanize(val)"></span>
                 </th>
@@ -108,13 +102,13 @@
             </tbody>
           </table>
         </section>
-      </template> -->
+      </template>
 
-      <!-- <section>
+      <section>
         <h3>Built-In Checks</h3>
         <table class="table table">
           <tbody>
-            <template v-for="(value,property) in builtInChecks">
+            <template v-for="(value,property) in Net.selected.builtInChecks">
               <tr v-bind:class="{'text-danger': value === false }">
                 <th>{{property}}</th>
                 <td><span class="fa fa-check" v-bind:class="{'fa-check': value === true, 'fa-times': value === false }"></span></td>
@@ -122,13 +116,16 @@
             </template>
           </tbody>
         </table>
-      </section> -->
+      </section>
 
       <footer class="text-center my-3">
         <button class="btn btn-lg btn-primary" v-on:click="copyPayload">Copy Payload</button>
       </footer>
 
     </div>
+    <pre>{{payloads}}</pre>
   </main>
+  <script src="./assets/scripts/payload.class.js"></script>
+  <script src="./dist/panel.js"></script>
 </body>
 </html>
