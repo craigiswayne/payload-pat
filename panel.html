@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <title>Bait</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -6,22 +7,25 @@
     <link rel="stylesheet" href="./dist/panel.css">
     <script src="./node_modules/vue/dist/vue.js"></script>
 </head>
+
 <body>
+
   <main id="app">
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    	<div class="navbar-brand"><h2>HLS</h2></div>
-  				<h2><a class="nav-link" href="#" onclick="window.print()">Print</a></h2>
+        <div class="navbar-brand"><h2>HLS</h2></div>
+                                <h2><a class="nav-link" href="#" onclick="window.print()">Print</a></h2>
           <select title="Payloads found" @change="viewPayload($event)">
             <option v-for="(payload, index) in payloads">{{index+1}} - {{payload.timestamp.getHours()}}:{{payload.timestamp.getMinutes()}}:{{payload.timestamp.getSeconds()}}</option>
           </select>
-    	</div>
+        </div>
     </nav>
 
     <div class="container-fluid" v-if="Net.selected">
 
       <section id="offer-summary-section">
         <h3>Offer Summary</h3>
-        <table class="table">
+        <table class="table table-hover">
           <tbody>
             <tr v-for="(offer,index) in Net.selected.offerSummary" :key='index'>
               <th>
@@ -44,36 +48,61 @@
 
       <section id="user-info-section">
         <h3>User Info</h3>
-        <table class="table">
+        {{Net.sessionInfo}}
+        <table class="table table-hover">
           <tbody>
             <tr>
-              <th>PlayerKey</th><td><span class="badge badge-secondary" title="Gaming System ID">{{Net.selected.userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{Net.selected.userInfo.userID}}</span></td>
+              <th>PlayerKey</th>
+              <td>
+                <span class="badge badge-secondary" title="Gaming System ID">{{Net.selected.userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{Net.selected.userInfo.userID}}</span>
+                <span class="fa fa-question text-info float-right" title="from payload"></span>
+              </td>
             </tr>
             <tr>
-              <th>Username</th><td>{{Net.selected.userInfo.username}}</td>
+              <th>Username</th>
+              <td>
+                {{Net.selected.userInfo.username}}
+                <span class="fa fa-question text-info float-right" title="from ui"></span>
+              </td>
             </tr>
             <tr>
-              <th>Session ID</th><td>{{Net.selected.userInfo.sessionID}}</td>
+              <th>Session ID</th>
+              <td>
+                {{Net.sessionInfo.sessionID}}
+                <span class="fa fa-question text-info float-right" title="from session storage"></span>
+              </td>
             </tr>
             <tr>
-              <th>Balance</th><td>{{Net.selected.userInfo.balance}}</td>
+              <th>Balance</th>
+              <td>
+                {{Net.selected.userInfo.balance}}
+                <span class="fa fa-question text-info float-right" title="from ui"></span>
+              </td>
             </tr>
             <tr>
-              <th>Language</th><td title="todo: supply full language here">{{Net.selected.userInfo.languageISO}}</td>
+              <th>Language</th>
+              <td title="todo: supply full language here">
+                {{Net.selected.userInfo.languageISO}}
+                <span class="fa fa-question text-info float-right" title="from session storage"></span>
+              </td>
             </tr>
             <tr>
-              <th>Country</th><td><span title="todo: supply full country here">{{Net.selected.userInfo.countryISO}}</span></td>
+              <th>Country</th>
+              <td>
+                <span>{{Net.selected.userInfo.countryISO}} (todo: supply full country here / flag)</span>
+                <span class="fa fa-question text-info float-right" title="from session storage"></span>
+              </td>
             </tr>
           </tbody>
         </table>
         <div class="row justify-content-end">
-          <span class="btn"><a href="#">View in UserInfo</a></span>
+          <span class="btn"><button @click="copyVariable(Net.selected.userInfo.raw)">Copy Raw</a></span>
         </div>
       </section>
 
       <section id="product-section">
         <h3>Product Info</h3>
-        <table class="table">
+        <table class="table table-hover">
           <tbody>
             <tr><th>Name</th><td>{{Net.selected.productInfo.name}} (TODO: show the product logo or branding here)</td></tr>
             <tr><th>Company</th><td>{{Net.selected.productInfo.company}} (TODO: show the company logo or branding here)</td></tr>
@@ -85,19 +114,23 @@
       <template v-for="summary in Net.selected.offerSummary">
         <section v-if="summary.type !== 'total'" :id="slugify(summary.type)+'-offers'" >
           <h3><span class="mr-2">{{summary.type}} Offers</span><span class="badge badge-light">{{summary.count}}</span></h3>
-          <table>
+          <table class="table table-hover">
             <thead>
               <tr>
-                <th v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in Net.selected.offers.filter(o=>o.type === summary.type)[0]">
-                  {{prop}}
-                </th>
+                <th>Name</th>
+                <th>Offer Type</th>
+                <th>Product</th>
+                <th>Content Type</th>
+                <th>Opted In?</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(offer, offerIndex) in Net.selected.offers.filter(o=>o.type === summary.type)">
-                <td v-if="['type'].indexOf(prop) === -1" v-for="(val, prop) in offer">
-                  <span v-html="humanize(val)"></span>
-                </th>
+                <td>{{offer.name}}</td>
+                <td>{{offer.type}}</td>
+                <td>{{offer.productType}}</td>
+                <td>{{offer.content.type}}</td>
+                <td>{{offer.optedIN}}</td>
               </tr>
             </tbody>
           </table>
@@ -106,12 +139,16 @@
 
       <section>
         <h3>Built-In Checks</h3>
-        <table class="table table">
+        <table class="table table-hover">
           <tbody>
             <template v-for="(value,property) in Net.selected.builtInChecks">
-              <tr v-bind:class="{'text-danger': value === false }">
+              <tr v-bind:class="{'text-danger': value !== true }">
                 <th>{{property}}</th>
-                <td><span class="fa fa-check" v-bind:class="{'fa-check': value === true, 'fa-times': value === false }"></span></td>
+                <td>
+                  <h4>
+                    <span class="badge" v-bind:class="{'badge-danger': value !== true, 'badge-secondary': value === true}">{{ value !== true ? 'FAIL' : 'Pass'}}</span>
+                  </h4>
+                </td>
               </tr>
             </template>
           </tbody>
@@ -119,13 +156,17 @@
       </section>
 
       <footer class="text-center my-3">
-        <button class="btn btn-lg btn-primary" v-on:click="copyPayload">Copy Payload</button>
+        <button class="btn btn-lg btn-primary" @click="copyVariable(Net.selected.raw.body)">Copy Payload</button>
       </footer>
 
     </div>
-    <pre>{{payloads}}</pre>
+    <button @click="addTestPayload()">Test</button>
+
   </main>
+
   <script src="./assets/scripts/payload.class.js"></script>
   <script src="./dist/panel.js"></script>
+
 </body>
+
 </html>
