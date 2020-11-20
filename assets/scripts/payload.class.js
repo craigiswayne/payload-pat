@@ -61,10 +61,12 @@ class User {
     this.languageISO = window.sessionStorage.language;
     this.countryISO = window.sessionStorage.sessionCountry;
 
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      var activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, {"message": "getSessionInfo"});
-    });
+    if( chrome && chrome.tabs && chrome.query ){
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var activeTab = tabs[0];
+        chrome.tabs.sendMessage(activeTab.id, {"message": "getSessionInfo"});
+      });
+    }
   }
 }
 
@@ -203,6 +205,8 @@ class Payload {
     this.userInfo.gamingSystemID  = json.PlayerKey.GamingSystemId;
     this.userInfo.sessionID = playeroffers.sessionId;
 
+    this.offers = [];
+    
     json.PlayerOffers.forEach( o => {
       this.offers.push( new Offer(o) );
     });

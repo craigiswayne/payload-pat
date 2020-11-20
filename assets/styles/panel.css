@@ -1,3 +1,7 @@
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
 .bg-primary {
     background-color: #d6df26 !important;
     background-color: #1bbed1 !important;
@@ -7,15 +11,5 @@
 
 main section{
   padding: 2em 1em;
-  transition: background 0.3s ease;
   border-bottom: 1px solid #ccc;
-}
-
-/**
- * Prevent these styles from bleeding into the printed page
- */
-@media screen {
-  main section:hover{
-    background-color: rgba(0,0,0,0.05);
-  }
 }

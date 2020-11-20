@@ -1,5 +1,5 @@
 function copyVariable(variable){
-  variable = variable || Net.selected;
+  variable = variable || window.HLS.selected;
   let textarea = document.body.appendChild(document.createElement('textarea'));
   textarea.value = JSON.stringify(variable, undefined, 2);
   textarea.select();
@@ -41,10 +41,11 @@ function humanize( value ){
   return value;
 }
 
-function viewPayload(event){
-  const payload = window.payloads[event.srcElement.selectedIndex];
+function viewPayload(index){
+  const payload = window.HLS.payloads[index];
   payload.init();
-  Net.selected = payload;
+  window.HLS.selected = payload;
+  window.HLS.selectedIndex = index+1;
 }
 
 function addTestPayload(){
@@ -54,7 +55,7 @@ function addTestPayload(){
       const json = JSON.parse(this.responseText);
       const payload = new Payload();
       payload.raw.body = json
-      window.payloads.push(payload);
+      window.HLS.payloads.push(payload);
     }
   };
   xhttp.open("GET", "./assets/payload.json", true);
@@ -62,19 +63,28 @@ function addTestPayload(){
 }
 
 //ensure that the payloads store is available and ready to accept new values
-window['payloads'] = window['payloads'] || [];
-
-const Net = {
+window['HLS'] = window['HLS'] || {
+  payloads: [],
+  regex: /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm, //must match the one used in devtools.js
   selected: null,
+  selectedIndex: null,
   sessionInfo: {}
 };
+
+Vue.filter('niceTime', function(value) {
+  if (!value) {
+    return value;
+  }
+
+  return `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`;
+});
 
 const vOptions = {
     el: '#app',
     data: function () {
         return {
-            Net: Net,
-            payloads: window.payloads,
+            HLS: window.HLS,
+            payloads: window.HLS.payloads,
             slugify: slugify,
             humanize: humanize,
             copyVariable: copyVariable,
@@ -89,11 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
     app = new Vue(vOptions);
 });
 
-
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if( request.message === "sessionInfo" ) {
-      Net.sessionInfo = request.sessionInfo
+if( chrome && chrome.runtime && chrome.onMessage ){
+  chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if( request.message === "sessionInfo" ) {
+        window.HLS.sessionInfo = request.sessionInfo
+      }
     }
-  }
-)
+  )
+}

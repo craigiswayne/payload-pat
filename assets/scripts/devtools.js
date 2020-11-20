@@ -5,10 +5,12 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
       return;
     }
 
-    PanelWindow['payloads'] = PanelWindow['payloads'] || [];
+    PanelWindow['HLS'] = PanelWindow['HLS'] || {
+      payloads: [],
+      regex: /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm //must match the one used in panel.js
+    };
 
-    const regex = /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm;
-    if( !request.request.url.match(regex) ){
+    if( !request.request.url.match(HLS.regex) ){
       return;
     }
 
@@ -20,7 +22,7 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
     let payload = new Payload(request);
     payload.getContent = request.getContent;
 
-    PanelWindow.payloads.push(payload);
+    PanelWindow.HLS.payloads.push(payload);
     // debugger;
     // request.getContent(function(body){
     //   debugger;

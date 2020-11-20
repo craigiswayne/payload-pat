@@ -1,33 +1,63 @@
 <html lang="en">
 
 <head>
-    <title>Bait</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css ">
-    <link rel="stylesheet" href="./dist/panel.css">
-    <script src="./node_modules/vue/dist/vue.js"></script>
+  <title>Bait</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css ">
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="./dist/panel.bundle.css">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> -->
+  <script src="./node_modules/vue/dist/vue.js"></script>
 </head>
 
-<body>
+<body class="bg-light">
 
-  <main id="app">
+  <main id="app" class="d-flex flex-column" v-bind:class="{ 'h-100': HLS.selected === null }">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="navbar-brand"><h2>HLS</h2></div>
-                                <h2><a class="nav-link" href="#" onclick="window.print()">Print</a></h2>
-          <select title="Payloads found" @change="viewPayload($event)">
-            <option v-for="(payload, index) in payloads">{{index+1}} - {{payload.timestamp.getHours()}}:{{payload.timestamp.getMinutes()}}:{{payload.timestamp.getSeconds()}}</option>
-          </select>
+    <header class="d-flex justify-content-end">
+      <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span v-if="HLS.selected === null">{{payloads.length}} Payloads found</span>
+          <span v-if="HLS.selected !== null">Payload #{{HLS.selectedIndex}}</span>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-item" v-if="payloads.length === 0">
+            ...still waiting
+          </div>
+          <div class="dropdown-item" v-for="(payload, index) in payloads" @click="viewPayload(index)">
+            {{index+1}} - {{payload.timestamp|niceTime}}
+          </div>
         </div>
-    </nav>
+      </div>
 
-    <div class="container-fluid" v-if="Net.selected">
+      <div class="fa fa-ellipsis-v h4 ml-3"></div>
+    </header>
+
+
+    <div id="content" class="flex-grow-1">
+
+      <div v-if="payloads.length === 0" class="my-2 alert border-warning text-warning mx-auto text-center" style="max-width: 50%;">
+        Waiting for network requests...
+      </div>
+
+      <div style="width: 300px;height: 300px;border-radius: 50%;background-image: url(https://cdn.dribbble.com/users/2634687/screenshots/5770658/unlucky_fisherman.gif);background-position: center;background-size: cover;margin: auto;background-repeat: no-repeat;"></div>
+
+      <div v-if="payloads.length !== 0 && HLS.selected === null" class="my-2 alert border-info text-info mx-auto text-center" style="max-width: 50%;">
+        Select a payload from the dropdown...
+      </div>
+
+      <div v-if="HLS.selected !== null">
 
       <section id="offer-summary-section">
         <h3>Offer Summary</h3>
         <table class="table table-hover">
           <tbody>
-            <tr v-for="(offer,index) in Net.selected.offerSummary" :key='index'>
+            <tr>
+              <th>Timestamp</th><td>{{HLS.selected.timestamp|niceTime}}</td>
+            </tr>
+            <tr v-for="(offer,index) in HLS.selected.offerSummary" :key='index'>
               <th>
                 <a :href="slugify('#'+offer.type+'-offers')">{{offer.type}}</a>
               </th>
@@ -37,7 +67,8 @@
             </tr>
           </tbody>
           <tfoot>
-              <th>Total</th><td>{{Net.selected.offers.length}}</td>
+            <th>Total</th>
+            <td>{{HLS.selected.offers.length}}</td>
           </tfoot>
         </table>
         <div class="row justify-content-end">
@@ -48,55 +79,55 @@
 
       <section id="user-info-section">
         <h3>User Info</h3>
-        {{Net.sessionInfo}}
+        <span>SESSION INFO:> {{HLS.sessionInfo}}</span>
         <table class="table table-hover">
           <tbody>
             <tr>
               <th>PlayerKey</th>
               <td>
-                <span class="badge badge-secondary" title="Gaming System ID">{{Net.selected.userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{Net.selected.userInfo.userID}}</span>
+                <span class="badge badge-secondary" title="Gaming System ID">{{HLS.selected.userInfo.gamingSystemID}}</span><strong>-</strong><span class="badge badge-secondary" title="User ID">{{HLS.selected.userInfo.userID}}</span>
                 <span class="fa fa-question text-info float-right" title="from payload"></span>
               </td>
             </tr>
             <tr>
               <th>Username</th>
               <td>
-                {{Net.selected.userInfo.username}}
+                {{HLS.selected.userInfo.username}}
                 <span class="fa fa-question text-info float-right" title="from ui"></span>
               </td>
             </tr>
             <tr>
               <th>Session ID</th>
               <td>
-                {{Net.sessionInfo.sessionID}}
+                {{HLS.sessionInfo.sessionID}}
                 <span class="fa fa-question text-info float-right" title="from session storage"></span>
               </td>
             </tr>
             <tr>
               <th>Balance</th>
               <td>
-                {{Net.selected.userInfo.balance}}
+                {{HLS.selected.userInfo.balance}}
                 <span class="fa fa-question text-info float-right" title="from ui"></span>
               </td>
             </tr>
             <tr>
               <th>Language</th>
               <td title="todo: supply full language here">
-                {{Net.selected.userInfo.languageISO}}
+                {{HLS.selected.userInfo.languageISO}}
                 <span class="fa fa-question text-info float-right" title="from session storage"></span>
               </td>
             </tr>
             <tr>
               <th>Country</th>
               <td>
-                <span>{{Net.selected.userInfo.countryISO}} (todo: supply full country here / flag)</span>
+                <span>{{HLS.selected.userInfo.countryISO}} (todo: supply full country here / flag)</span>
                 <span class="fa fa-question text-info float-right" title="from session storage"></span>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="row justify-content-end">
-          <span class="btn"><button @click="copyVariable(Net.selected.userInfo.raw)">Copy Raw</a></span>
+          <span class="btn"><button @click="copyVariable(HLS.selected.userInfo.raw)">Copy Raw</a></span>
         </div>
       </section>
 
@@ -104,17 +135,26 @@
         <h3>Product Info</h3>
         <table class="table table-hover">
           <tbody>
-            <tr><th>Name</th><td>{{Net.selected.productInfo.name}} (TODO: show the product logo or branding here)</td></tr>
-            <tr><th>Company</th><td>{{Net.selected.productInfo.company}} (TODO: show the company logo or branding here)</td></tr>
-            <tr><th>Area</th><td>{{Net.selected.productInfo.area}}</td></tr>
+            <tr>
+              <th>Name</th>
+              <td>{{HLS.selected.productInfo.name}} (TODO: show the product logo or branding here)</td>
+            </tr>
+            <tr>
+              <th>Company</th>
+              <td>{{HLS.selected.productInfo.company}} (TODO: show the company logo or branding here)</td>
+            </tr>
+            <tr>
+              <th>Area</th>
+              <td>{{HLS.selected.productInfo.area}}</td>
+            </tr>
           </tbody>
         </table>
       </section>
 
-      <template v-for="summary in Net.selected.offerSummary">
-        <section v-if="summary.type !== 'total'" :id="slugify(summary.type)+'-offers'" >
+      <template v-for="summary in HLS.selected.offerSummary">
+        <section v-if="summary.type !== 'total'" :id="slugify(summary.type)+'-offers'">
           <h3><span class="mr-2">{{summary.type}} Offers</span><span class="badge badge-light">{{summary.count}}</span></h3>
-          <table class="table table-hover">
+          <table class="table table-hover table-responsive">
             <thead>
               <tr>
                 <th>Name</th>
@@ -125,7 +165,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(offer, offerIndex) in Net.selected.offers.filter(o=>o.type === summary.type)">
+              <tr v-for="(offer, offerIndex) in HLS.selected.offers.filter(o=>o.type === summary.type)">
                 <td>{{offer.name}}</td>
                 <td>{{offer.type}}</td>
                 <td>{{offer.productType}}</td>
@@ -141,7 +181,7 @@
         <h3>Built-In Checks</h3>
         <table class="table table-hover">
           <tbody>
-            <template v-for="(value,property) in Net.selected.builtInChecks">
+            <template v-for="(value,property) in HLS.selected.builtInChecks">
               <tr v-bind:class="{'text-danger': value !== true }">
                 <th>{{property}}</th>
                 <td>
@@ -156,11 +196,19 @@
       </section>
 
       <footer class="text-center my-3">
-        <button class="btn btn-lg btn-primary" @click="copyVariable(Net.selected.raw.body)">Copy Payload</button>
+        <button class="btn btn-lg btn-primary" @click="copyVariable(HLS.selected.raw.body)">Copy Payload</button>
       </footer>
 
     </div>
+    </div>
+
     <button @click="addTestPayload()">Test</button>
+
+    <footer id="footer" class="row py-4 px-3 text-white bg-dark">
+      <h6 class="col-12">Settings:</h6>
+      <div class="col-1"><span class="fa fa-search"></span></div>
+      <div class="col"><code class="badge badge-secondary">/\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm</code></div>
+    </footer>
 
   </main>
 
