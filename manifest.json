@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "HLS",
+  "name": "Bait",
   "version": "0.1.13",
   "minimum_chrome_version": "10.0",
   "description": "Monitor payloads",
@@ -12,7 +12,7 @@
     "48": "assets/images/icon.png",
     "128": "assets/images/icon.png"
   },
-  "devtools_page": "devtools.html",
+  "devtools_page": "views/devtools.html",
   "content_scripts": [{
     "matches": [
       "<all_urls>"

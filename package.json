@@ -6,7 +6,7 @@
   "scripts": {
     "sass": "node-sass ./assets/styles -o dist",
     "bundle-css": "concat -o ./dist/panel.bundle.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./assets/styles/panel.css",
-    "build": "npm run build-css",
+    "build": "npm run bundle-css",
     "watch": "npm run sass && node-sass --watch ./assets/styles -o dist",
     "ts": "tsc -p ./",
     "test": "echo \"Error: no test specified\" && exit 1"

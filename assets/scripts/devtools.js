@@ -10,7 +10,7 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
       regex: /\/api\/messages\/([0-9]{2,3})-([0-9]{4,})/gm //must match the one used in panel.js
     };
 
-    if( !request.request.url.match(HLS.regex) ){
+    if( !request.request.url.match(PanelWindow.HLS.regex) ){
       return;
     }
 
@@ -30,7 +30,7 @@ chrome.devtools.network.onRequestFinished.addListener(function(request) {
     // });
 });
 
-chrome.devtools.panels.create('HLS', '/assets/images/logo.png', 'panel.html',
+chrome.devtools.panels.create('HLS', '/assets/images/logo.png', 'views/panel.html',
   function(extensionPanel) {
     extensionPanel.onShown.addListener(function(panelWindow) {
         PanelWindow = panelWindow;
