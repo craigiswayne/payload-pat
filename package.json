@@ -4,6 +4,8 @@
   "description": "Chrome Extension that allows you to listen for specific HTML requests and then act upon the response",
   "main": "index.js",
   "scripts": {
+    "lint": "npm run lint-js",
+    "lint-js": "eslint assets/scripts/*.js",
     "sass": "node-sass ./assets/styles -o dist",
     "bundle-css": "concat -o ./dist/panel.bundle.css ./node_modules/bootstrap/dist/css/bootstrap.min.css ./assets/styles/panel.css",
     "build": "npm run bundle-css",
@@ -28,6 +30,8 @@
   },
   "devDependencies": {
     "concat": "^1.0.3",
+    "eslint": "^7.15.0",
+    "eslint-config-google": "^0.14.0",
     "jquery": "^3.4.1"
   }
 }
