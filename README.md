@@ -1,3 +1,14 @@
+## Development
+
+### Linting
+extends upon google's eslint configs
+```
+npm run lint:js
+```
+
+* 
+* `npm run watch`
+
 ## References:
 1. https://thoughtbot.com/blog/how-to-make-a-chrome-extension
 1. Generate Report of the Current Lobby, with a screenshot

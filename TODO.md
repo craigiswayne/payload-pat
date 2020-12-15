@@ -42,3 +42,20 @@
   * Show PlayerKey
   * Testing rules for each offer
   * Check Spreadsheet for data to show
+* [ ] Custom Browser Action based on something: https://lihautan.com/personalised-development-workspace-with-chrome-extension/
+* multiple saved searches, maybe make use of a tabbed system?
+  * store data in a named object array
+  ```javascript
+  [
+    {
+      query: "",
+      results: []
+    },
+    {
+      query: "",
+      results: []
+    }
+  ]
+  ```
+  * [] Show cashierToken separately
+  * [] copy buttons next to each extracted info
